@@ -31,10 +31,13 @@ public class MainController {
     public String main(Model model, @AuthenticationPrincipal User user){
         HashMap<Object, Object> data = new HashMap<>();
 
-        data.put("profile", user);
-        data.put("messages", messageRepository.findAll());
+        if (user != null){
+            data.put("profile", user);
+            data.put("messages", messageRepository.findAll());
+        }
 
         model.addAttribute("frontendData", data);
+
         //Добавляем атрибут isDevMode, по которому определяем девелоперская сборка или продакшн.
         //От этого будет зависеть откуда будут тянуться скрипты: с сервера или со статики
         //При проверке условия использована йода-запись, когда константное поле находится с левой стороны
